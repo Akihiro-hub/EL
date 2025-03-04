@@ -26,7 +26,6 @@ with col2:
 with col3:
     exclude_word5 = bleach.clean(st.text_input("Palabra a excluir 5", ""))
     exclude_word6 = bleach.clean(st.text_input("Palabra a excluir 6", ""))
-st.write("Esta aplicación se mantiene durante el período del Proyecto GuateCrece.")
 
 # デフォルトで除外する単語のリスト
 default_excluded_words = {
