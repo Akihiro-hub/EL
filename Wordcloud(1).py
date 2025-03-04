@@ -103,3 +103,5 @@ if st.session_state.authenticated:
             st.write("##### :blue[Bigrams observados:]")
             for bigram, freq in bigram_freq.most_common(3):
                 st.write(f"{' '.join(bigram)}: {freq}")
+else:
+    verificar_contraseña()
