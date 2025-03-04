@@ -10,14 +10,10 @@ import bleach
 # Streamlit UIの設定
 st.write("## :blue[Análisis de Texto o Documento]") 
 st.write("Puede elaborar Nube de Palabras (WordCloud), figura visual donde las palabras frecuentes o importantes en un texto se presentan de manera destacada. Se usa en muchos proyectos de Inteligencia Artificial.")
-st.write("##### :green[Paso 1: Pegue el texto para el análisis o suba un archivo PDF.]")
+st.write("##### :green[Paso 1: Pegue el texto para el análisis.]")
 
 # テキストエリアとPDFファイルアップロードのオプション
-col1, col2 = st.columns(2)
-with col1:
-    texto = st.text_area("Pegue aquí el texto a analizar", "")
-with col2: 
-    pdf_file = st.file_uploader("O, sube un archivo PDF a analizar, como segunda opción", type="pdf")
+texto = st.text_area("Pegue aquí el texto a analizar", "")
 
 # 除外したい単語の入力
 st.write("##### :green[Paso 2: Note abajo las palabras que deben excluirse del análisis, si las tiene.]")
@@ -48,23 +44,14 @@ default_excluded_words = {
 user_excluded_words = {exclude_word1, exclude_word2, exclude_word3, exclude_word4, exclude_word5, exclude_word6}
 excluded_words = default_excluded_words.union(user_excluded_words)
 
-if pdf_file:
-    # PDFからテキストを抽出
-    pdf_reader = PyPDF2.PdfReader(pdf_file)
-    texto = ""
-    for page in pdf_reader.pages:
-        texto += page.extract_text()
 
-# サニタイズされたテキスト
-texto = bleach.clean(texto)
+# テキストのトークン化と前処理
+words = re.findall(r'\b\w+\b', texto.lower())
+filtered_words = [word for word in words if word not in excluded_words]
 
-if texto:
-    # テキストのトークン化と前処理
-    words = re.findall(r'\b\w+\b', texto.lower())
-    filtered_words = [word for word in words if word not in excluded_words]
+# Word Cloudの作成
+wordcloud = WordCloud(width=800, height=400, background_color='white').generate(" ".join(filtered_words))
 
-    # Word Cloudの作成
-    wordcloud = WordCloud(width=800, height=400, background_color='white').generate(" ".join(filtered_words))
 
 # 分析ボタンの表示
 if st.button("Analizar"):
