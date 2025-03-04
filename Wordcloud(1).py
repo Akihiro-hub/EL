@@ -43,15 +43,7 @@ default_excluded_words = {
 user_excluded_words = {exclude_word1, exclude_word2, exclude_word3, exclude_word4, exclude_word5, exclude_word6}
 excluded_words = default_excluded_words.union(user_excluded_words)
 
-if pdf_file:
-    # PDFからテキストを抽出
-    pdf_reader = PyPDF2.PdfReader(pdf_file)
-    texto = ""
-    for page in pdf_reader.pages:
-        texto += page.extract_text()
 
-# サニタイズされたテキスト
-texto = bleach.clean(texto)
 
 if texto:
     # テキストのトークン化と前処理
