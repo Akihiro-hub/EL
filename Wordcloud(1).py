@@ -3,7 +3,6 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import seaborn as sns
 from collections import Counter
-import PyPDF2
 import re
 import bleach
 
